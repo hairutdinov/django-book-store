@@ -6,13 +6,24 @@ from django.utils.text import slugify
 # Create your models here.
 
 
+class Author(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
+    def full_name(self) -> str:
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    def __str__(self) -> str:
+        return self.full_name()
+
+
 class Book(models.Model):
     title = models.CharField(max_length=50)
     rating = models.IntegerField(validators=[
         MinValueValidator(1),
         MaxValueValidator(5)
     ])
-    author = models.CharField(max_length=100, null=True)
+    author = models.ForeignKey(to=Author, on_delete=models.RESTRICT, null=True)
     is_bestselling = models.BooleanField(default=False)
     slug = models.SlugField(default='', null=False,
                             blank=True,

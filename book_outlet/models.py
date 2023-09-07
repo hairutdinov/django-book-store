@@ -6,6 +6,11 @@ from django.utils.text import slugify
 # Create your models here.
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=80)
+    code = models.CharField(max_length=2)
+
+
 class Address(models.Model):
     street = models.CharField(max_length=80)
     postal_code = models.CharField(max_length=6)
@@ -42,6 +47,7 @@ class Book(models.Model):
                             blank=True,
                             # editable=False,
                             db_index=True)
+    published_countries = models.ManyToManyField(Country)
 
     def __str__(self) -> str:
         return '{} ({})'.format(self.title, self.rating)

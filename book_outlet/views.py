@@ -13,9 +13,9 @@ def index(request):
     })
 
 
-def book_detail(request, _id: int):
+def book_detail(request, slug: str):
     # try:
-    book = get_object_or_404(Book, pk=_id)
+    book = get_object_or_404(Book, slug=slug)
     return render(request, 'book_outlet/book_detail.html', {
         'book': book,
     })

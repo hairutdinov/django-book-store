@@ -6,9 +6,19 @@ from django.utils.text import slugify
 # Create your models here.
 
 
+class Address(models.Model):
+    street = models.CharField(max_length=80)
+    postal_code = models.CharField(max_length=6)
+    city = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return '{}, {} ({})'.format(self.city, self.street, self.postal_code)
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    address = models.OneToOneField(to=Address, on_delete=models.RESTRICT, null=True)
 
     def full_name(self) -> str:
         return '{} {}'.format(self.first_name, self.last_name)

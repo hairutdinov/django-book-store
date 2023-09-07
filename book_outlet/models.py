@@ -14,7 +14,7 @@ class Book(models.Model):
     ])
     author = models.CharField(max_length=100, null=True)
     is_bestselling = models.BooleanField(default=False)
-    slug = models.SlugField(default='', null=False)
+    slug = models.SlugField(default='', null=False, db_index=True)
 
     def __str__(self) -> str:
         return '{} ({})'.format(self.title, self.rating)
